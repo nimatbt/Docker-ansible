@@ -1,0 +1,68 @@
+- name: check for docker installation
+  shell: "which docker"
+  register: result
+  ignore_errors: true
+
+- name: update docker
+  shell: "docker --version"
+  register: up
+  ignore_errors: true
+  tags:
+    - update 
+  
+       
+- name: update apt cache and upgrade system
+  become: yes
+  apt:
+    update_cache: yes
+    upgrade: yes
+  when: result.rc == 1  
+  tags:
+    - install
+
+- name: remove old packages
+  become: yes
+  apt:
+    name: "{{ docker_old_packages }}"
+    state: absent
+  when: result.rc == 1  
+  tags:
+    - uninstall
+
+- name: install required packages
+  become: yes
+  apt:
+    name: "{{ docker_required_packages }}"
+    state: present
+  when: result.rc == 1
+  tags:
+    - install
+
+- name: add docker's official GPG key
+  apt_key:
+    url: "{{ docker_gpg_url }}"
+    state: present
+  when: result.rc == 1
+  ignore_errors: true
+
+- name: adding docker package repository
+  apt_repository:
+    repo: "{{ docker_repo }}"
+  when: result.rc == 1
+  ignore_errors: true
+
+- name: install docker
+  become: yes
+  apt:
+    name: "{{ docker_package }}"
+    state: latest
+  when: ansible_facts.os_family == "Debian"
+  when: result.rc == 1 
+  tags:
+    - install
+  
+
+  
+   
+   
+    

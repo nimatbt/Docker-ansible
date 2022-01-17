@@ -1,0 +1,9 @@
+---
+docker_compose_package:
+  - docker-compose
+  
+docker_compose_version: 
+  - 1.29.2
+
+
+

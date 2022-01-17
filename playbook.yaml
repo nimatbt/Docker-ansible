@@ -1,0 +1,8 @@
+---
+- hosts: docker
+  roles:
+   - Docker
+   
+- hosts: docker-compose
+  roles:
+    - Docker-compose

@@ -1,0 +1,64 @@
+- name: update apt cache and upgrade system
+  become: yes
+  apt:
+    update_cache: yes
+    upgrade: yes
+  when: docker_current_version.rc == 2
+  ignore_errors: true
+  tags:
+    - install
+    - update
+
+- name: remove old packages
+  become: yes
+  apt:
+    name: "{{ docker_old_packages }}"
+    state: absent
+  when: docker_current_version.rc == 2  
+  tags:
+    - update
+
+- name: install required packages
+  become: yes
+  apt:
+    name: "{{ docker_required_packages }}"
+    state: present
+  when: docker_current_version.rc == 2
+  tags:
+    - install
+    - update
+
+- name: check GPG key
+  shell: ls -ltr /usr/share/keyrings/docker-archive-keyring.gpg
+  ignore_errors: true
+  register: gpg
+  when: docker_current_version.rc == 2
+  tags:
+    - update
+    
+- name: add docker GPG key
+  become: true
+  ignore_errors: true
+  shell: "{{ docker_gpg_url }}"
+  when: docker_current_version.rc == 2 and gpg.rc == 2
+  tags:
+    - install
+
+- name: adding docker package repository
+  become: true
+  shell: "{{ docker_apt_repository }}"
+  when: docker_current_version.rc == 2
+  ignore_errors: true
+  tags:
+    - install
+
+- name: install docker
+  become: yes
+  apt:
+    name: "{{ docker_new_packages }}"
+    state: latest
+  when: docker_current_version.rc == 2 
+  notify: restart docker
+  tags:
+    - install
+    - update

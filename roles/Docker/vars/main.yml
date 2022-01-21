@@ -13,18 +13,8 @@ docker_required_packages:
   - lsb-release
   
 docker_new_packages:
-   - docker-ce
-   - docker-ce-cli
-   - containerd.io
-
-docker_repo:
-  - deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_facts.lsb.codename }} stable
-  
-docker_gpg_url:
-  - https://download.docker.com/linux/ubuntu/gpg
-  
-         
-docker_package:
-  - docker.io
-  
+#  - docker.io
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
 

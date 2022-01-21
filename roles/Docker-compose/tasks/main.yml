@@ -1,18 +1,49 @@
----
-- name: check for docker_compose installation
-  shell: "which docker-compose"
-  register: result
-  ignore_errors: true
+#Check current docker-compose version
+- name: Check current docker-compose version
+  command: docker-compose --version
+  register: docker_compose_current_version
+  changed_when: false
+  failed_when: false
+  check_mode: no
   tags:
-    - install
-      
+    - always
+
+- debug:
+    msg: >
+      Docker-compose is install on your system
+      "{{ docker_compose_current_version.stdout }}"
+  when: docker_compose_current_version.rc == 0  
+
+#Exit process if docker-compose install
+- name: Exit if docker-compose installed
+  meta: end_play
+  when: docker_compose_current_version.rc == 0 
+  tags:
+    - force update
+ 
+#Delete Old docker-compose version
+- name: Delete Old docker-compose version
+  become: yes
+  file:
+    path: "{{ docker_compose_path }}"
+    state: absent
+  when: >
+    docker_compose_current_version.stdout is defined
+    and docker_compose_version not in docker_compose_current_version.stdout
+  tags:
+    - delete
+
+#Install or Update Docker_compose
 - name: install docker_compose
   become: yes
-  apt:
-    name: "{{ docker_compose_package }}"
-    state: latest  
-  when: ansible_facts.os_family == "Debian"
-  when: result.rc == 1 
+  get_url: 
+    url : "{{ docker_compose_url }}"
+    dest: "{{ docker_compose_path }}"
+    mode: 'a+x'
+    force: yes
+  when: >
+    docker_compose_current_version.stdout is not defined
+    or docker_compose_version not in docker_compose_current_version.stdout
   tags:
-    - install  
-
+    - install
+  

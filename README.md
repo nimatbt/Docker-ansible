@@ -2,17 +2,17 @@
 
 This Ansible roles install the last version of Docker and Docker-compose in target hosts.
 
- # What is Ansible?
+  # What is Ansible?
 
 Ansible is IaC tool for configuration management. With the aid of Ansible, we can configure a multitude of systems without direct human interactions.
 Ansible is responsible for configuring existing systems, usually mutable ones.
 Ansible.com for more information.
 
- # what is docker?
+  # what is docker?
  
 Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.
 
- #G et started guide:
+  # Get started guide:
 
 Ansible version: 5.2.0
 
@@ -25,10 +25,10 @@ Ansible version: 5.2.0
 3) Install requirements package from requirements.txt
 
 4) Run this command:
-      #For normal installation
+  - For normal installation
     - ansible-playbook -i inventory.ini playbook.yaml
     
-      #For force update installation
+  - For force update installation
     - ansible-playbook -i inventory.ini playbook.yaml --skip-tags "force update"
     
     

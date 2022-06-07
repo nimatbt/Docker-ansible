@@ -17,19 +17,19 @@ Docker is an open platform for developing, shipping, and running applications. D
 Ansible version: 5.2.0
 
 1) Install python3-pip and python3-venv on your system
-    '''  apt install -y python3-pip python3-venv '''
+    ```  apt install -y python3-pip python3-venv ```
      
 2) Create virtual environment(venv)
-    - python -m venv venv
+    ``` python -m venv venv ```
     
 3) Install requirements package from requirements.txt
 
 4) Run this command:
   - For normal installation
-    - ansible-playbook -i inventory.ini playbook.yaml
+    ``` ansible-playbook -i inventory.ini playbook.yaml ```
     
   - For force update installation
-    - ansible-playbook -i inventory.ini playbook.yaml --skip-tags "force update"
+    ``` ansible-playbook -i inventory.ini playbook.yaml --skip-tags "force update" ```
     
     
 ### Ansible Practice

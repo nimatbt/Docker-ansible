@@ -20,18 +20,33 @@ Ansible version: 5.2.0
     ```
     apt install -y python3-pip python3-venv
     ```
-     
-2) Create virtual environment(venv)
-    ``` python -m venv venv ```
-    
-3) Install requirements package from requirements.txt
 
-4) Run this command:
+2) Clone repository
+   ```
+   git clone https://github.com/nimatbt/Docker-ansible.git
+   ```
+
+3) Create virtual environment(venv)
+    ```
+    python -m venv venv
+    ```
+
+
+4) Install requirements package from requirements.txt
+   ```
+   pip install -r requirements.txt
+   ```
+
+5) Run this command:
   - For normal installation
-    ``` ansible-playbook -i inventory.ini playbook.yaml ```
+    ```
+    ansible-playbook -i inventory.ini playbook.yaml
+    ```
     
   - For force update installation
-    ``` ansible-playbook -i inventory.ini playbook.yaml --skip-tags "force update" ```
+    ```
+    ansible-playbook -i inventory.ini playbook.yaml --skip-tags "force update"
+    ```
     
     
 ### Ansible Practice

@@ -17,7 +17,9 @@ Docker is an open platform for developing, shipping, and running applications. D
 Ansible version: 5.2.0
 
 1) Install python3-pip and python3-venv on your system
-    ```  apt install -y python3-pip python3-venv ```
+    ```
+    apt install -y python3-pip python3-venv
+    ```
      
 2) Create virtual environment(venv)
     ``` python -m venv venv ```
